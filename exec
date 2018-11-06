@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+// 需要安装go版本1.11.*
+
+const { exec } = require('child_process');
+
+exec('cp /usr/local/go/misc/wasm/wasm_exec.js ' + __dirname, (error, stdout, stderr) => {
+    if (error) {
+        console.error(`copy error: ${error}`);
+        return;
+    }
+    console.log('copy success');
+});
+
+exec('GOARCH=wasm GOOS=js go build -o test.wasm main.go', (error, stdout, stderr) => {
+    if (error) {
+        console.error(`exec error: ${error}`);
+        return;
+    }
+    console.log('exec success');
+});
